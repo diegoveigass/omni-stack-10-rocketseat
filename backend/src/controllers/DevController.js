@@ -39,5 +39,18 @@ module.exports = {
     
   
     return res.json(dev);
-  }
+  },
+
+  async destroy (req, res) {
+    const { github_username } = req.body;
+    const dev = await Dev.findOneAndDelete({ github_username })
+
+    if (!dev) {
+      return res.status(401).json({error: 'user not found'})
+    }
+
+    return res.json({ ok: 'success'})
+
+
+  },
 }
